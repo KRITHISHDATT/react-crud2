@@ -4,13 +4,14 @@ import SideNav from "./components/SideNav";
 import AddUser from "./components/AddUser";
 import { useState } from "react";
 import EditUsers from "./components/EditUsers";
-import Account from "./components/Details/Account";
-import BillComponent from "./components/Details/BillComponent";
-import PaymentComponent from "./components/Details/PaymentComponent";
-import ProfileComponent from "./components/Details/ProfileComponent";
-// import Details from "./components/Details/Details";
+// import Account from "./components/Details/Account";
+// import BillComponent from "./components/Details/BillComponent";
+// import PaymentComponent from "./components/Details/PaymentComponent";
+// import ProfileComponent from "./components/Details/ProfileComponent";
+// import Detail from "./components/Details/Detail";
 import React from 'react'
 import ContextComponent from "./components/context/ContextComponent";
+import Hooks from "./components/Details/Hooks";
 
 function App() {
 
@@ -25,6 +26,7 @@ function App() {
               <Route path="/dashboard" element={<ContextComponent><DashBoard /></ContextComponent>} />
               <Route path="/add-user" element={<ContextComponent><AddUser /></ContextComponent>} />
               <Route path='/edit-user/:id' element={<ContextComponent><EditUsers /></ContextComponent>} />
+              <Route path='/hooks' element={<Hooks />} />
               {/* <Route path='/details' element={<Detail />}>
                   <Route path="accounts" element={<Account />} />
                   <Route path="bill" element={<BillComponent />} />

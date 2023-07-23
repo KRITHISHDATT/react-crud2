@@ -4,7 +4,7 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import ContextComponent from './context/ContextComponent';
 import { userContext } from './context/ContextComponent';
-
+import axios from 'axios';
 
 function EditUsers({ userData, setUser }) {
 
@@ -16,24 +16,44 @@ function EditUsers({ userData, setUser }) {
     let [addrs, setAddress] = useState('');
     let nav = useNavigate();
 
-    useEffect(() => {
-        if (params.id < context.userData.length) {
-            setName(context.userData[params.id].name);
-            setEmail(context.userData[params.id].email);
-            setMobile(context.userData[params.id].mobile);
-            setAddress(context.userData[params.id].addrs);
-        } else {
-            alert('Invalid userId');
+    let editFunction = async () => {
+        try {
+            let res = await axios.put(`${'https://64bb72015e0670a501d707c3.mockapi.io/users'}/${params.id}`, { name, email, mobile, addrs });
             nav("/dashboard");
+        } catch (error) {
+            console.log(error)
         }
-    });
-
-    let editFunction = () => {
-        const cloneData = [...context.userData];
-        cloneData.splice(params.id, 1, { name, email, mobile, addrs });
-        context.setUserData(cloneData);
-        nav("/dashboard");
+        // const cloneData = [...context.userData];
+        // cloneData.splice(params.id, 1, { name, email, mobile, addrs });
+        // context.setUserData(cloneData);
     }
+
+    let getData = async () => {
+        try {
+            let res = await axios.get(`${'https://64bb72015e0670a501d707c3.mockapi.io/users'}/${params.id}`);
+            if (res.data) {
+                setName(res.data.name);
+                setEmail(res.data.email);
+                setMobile(res.data.mobile);
+                setAddress(res.data.addrs);
+            }
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    useEffect(() => {
+        getData()
+        // if (params.id < context.userData.length) {
+        //     setName(context.userData[params.id].name);
+        //     setEmail(context.userData[params.id].email);
+        //     setMobile(context.userData[params.id].mobile);
+        //     setAddress(context.userData[params.id].addrs);
+        // } else {
+        //     alert('Invalid userId');
+        //     nav("/dashboard");
+        // }
+    }, []);
 
     return <div className='container'>
         <div className="d-sm-flex align-items-center justify-content-between mb-4">

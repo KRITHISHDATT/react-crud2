@@ -4,6 +4,8 @@ import Button from 'react-bootstrap/Button';
 import { useNavigate } from 'react-router-dom';
 // import { userContext } from '../App'
 import { userContext } from './context/ContextComponent';
+import axios from 'axios';
+
 function AddUser() {
 
     let context = useContext(userContext);
@@ -13,16 +15,27 @@ function AddUser() {
     let [addrs, setAddress] = useState("");
     let nav = useNavigate();
 
-    let saveFunction = () => {
-        const cloneData = [...context.userData];
-        cloneData.push({
-            name,
-            email,
-            mobile,
-            addrs,
-        })
-        context.setUserData(cloneData);
-        nav("/dashboard");
+    let saveFunction = async () => {
+        try {
+            let res = axios.post(`${'https://64bb72015e0670a501d707c3.mockapi.io/users'}`, {
+                name,
+                email,
+                mobile,
+                addrs,
+            });
+            // if (res.status == 201)
+                nav("/dashboard");
+        } catch (error) {
+            console.log(error)
+        }
+        // const cloneData = [...context.userData];
+        // cloneData.push({
+        //     name,
+        //     email,
+        //     mobile,
+        //     addrs,
+        // })
+        // context.setUserData(cloneData);
     }
 
     return <div className='container'>
